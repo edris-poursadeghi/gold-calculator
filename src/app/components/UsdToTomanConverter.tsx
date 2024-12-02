@@ -58,6 +58,12 @@ export default function UsdAveragePurchase() {
     );
   };
 
+  // Function to delete a transaction
+  const handleDeleteTransaction = (index: number) => {
+    const newTransactions = transactions.filter((_, idx) => idx !== index);
+    setTransactions(newTransactions);
+  };
+
   return (
     <div className="max-w-xl mx-auto p-4 mt-8">
       <h1 className="text-2xl font-bold mb-4">USD Purchase Average</h1>
@@ -102,6 +108,12 @@ export default function UsdAveragePurchase() {
             <p>USD Amount: {formatNumber(transaction.usdAmount.toFixed(2))} USD</p>
             <p>Exchange Rate: {formatNumber(transaction.exchangeRate.toFixed(2))} Toman</p>
             <p>Total Toman Spent: {formatNumber((transaction.usdAmount * transaction.exchangeRate).toFixed(2))} Toman</p>
+            <button
+              onClick={() => handleDeleteTransaction(idx)}
+              className="bg-red-500 text-white px-4 py-2 mt-2 rounded hover:bg-red-600"
+            >
+              Delete
+            </button>
           </li>
         ))}
       </ul>

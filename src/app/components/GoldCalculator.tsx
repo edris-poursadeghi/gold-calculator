@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState } from "react";
 
 type Position = {
   goldPrice: number;
@@ -10,18 +10,20 @@ type Position = {
 };
 
 const formatNumber = (value: number | string) => {
-  const num = typeof value === 'string' ? parseFloat(value.replace(/,/g, '')) : value;
-  if (isNaN(num)) return '';
+  const num =
+    typeof value === "string" ? parseFloat(value.replace(/,/g, "")) : value;
+  if (isNaN(num)) return "";
   return new Intl.NumberFormat().format(num);
 };
 
-const parseNumber = (value: string) => parseFloat(value.replace(/,/g, '') || '0');
+const parseNumber = (value: string) =>
+  parseFloat(value.replace(/,/g, "") || "0");
 
 export default function GoldCalculator() {
   const [positions, setPositions] = useState<Position[]>([]);
-  const [goldPrice, setGoldPrice] = useState<string>(''); // Store as a formatted string
-  const [amount, setAmount] = useState<string>(''); // Store as a formatted string
-  const [goldAmount, setGoldAmount] = useState<string>(''); // Store amount of gold in milligrams
+  const [goldPrice, setGoldPrice] = useState<string>(""); // Store as a formatted string
+  const [amount, setAmount] = useState<string>(""); // Store as a formatted string
+  const [goldAmount, setGoldAmount] = useState<string>(""); // Store amount of gold in milligrams
 
   const handleAddPosition = () => {
     const pricePerMilligram = parseNumber(goldPrice);
@@ -29,11 +31,17 @@ export default function GoldCalculator() {
     const goldAmountInMilligrams = parseNumber(goldAmount);
     const fee = totalAmount * 0.015; // 1.5% fee
     const total = totalAmount + fee;
-    const calculatedGoldAmount = goldAmountInMilligrams || (totalAmount / pricePerMilligram) * 1000; // calculate if no gold amount input
+    const calculatedGoldAmount =
+      goldAmountInMilligrams || (totalAmount / pricePerMilligram) * 1000; // calculate if no gold amount input
 
     setPositions([
       ...positions,
-      { goldPrice: pricePerMilligram, goldAmount: calculatedGoldAmount, fee, total },
+      {
+        goldPrice: pricePerMilligram,
+        goldAmount: calculatedGoldAmount,
+        fee,
+        total,
+      },
     ]);
   };
 
@@ -51,6 +59,11 @@ export default function GoldCalculator() {
       totalGold += pos.goldAmount;
     });
     return totalGold;
+  };
+
+  const handleDeletePosition = (index: number) => {
+    const updatedPositions = positions.filter((_, idx) => idx !== index);
+    setPositions(updatedPositions);
   };
 
   return (
@@ -110,16 +123,24 @@ export default function GoldCalculator() {
             <p>Gold Bought: {formatNumber(pos.goldAmount.toFixed(2))} mg</p>
             <p>Fee: {formatNumber(pos.fee.toFixed(2))}</p>
             <p>Total Paid: {formatNumber(pos.total.toFixed(2))}</p>
+            <button
+              onClick={() => handleDeletePosition(idx)}
+              className="mt-2 text-red-500 hover:text-red-700"
+            >
+              Delete Position
+            </button>
           </li>
         ))}
       </ul>
 
       <h2 className="text-xl font-bold mt-6">Summary</h2>
       <p>
-        Average Gold Price: {formatNumber(calculateAverageGoldPrice().toFixed(2))}{' '}
-        per mg
+        Average Gold Price:{" "}
+        {formatNumber(calculateAverageGoldPrice().toFixed(2))} per mg
       </p>
-      <p>Total Gold Bought: {formatNumber(calculateTotalGold().toFixed(2))} mg</p>
+      <p>
+        Total Gold Bought: {formatNumber(calculateTotalGold().toFixed(2))} mg
+      </p>
     </div>
   );
 }
