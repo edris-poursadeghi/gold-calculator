@@ -34,13 +34,21 @@ export default function RootLayout({
             <nav>
               <ul className="flex space-x-6">
                 <li>
-                  <Link prefetch={false}  href="/gold-calculator" className="text-white hover:text-yellow-300">
+                  <Link
+                    prefetch={false}
+                    href="/gold-calculator"
+                    className="text-white hover:text-yellow-300"
+                  >
                     Gold Calculator
                   </Link>
                 </li>
                 <li>
-                  <Link prefetch={false} href="/usd-to-toman" className="text-white hover:text-yellow-300">
-                    USD to Toman
+                  <Link
+                    prefetch={false}
+                    href="/usd-to-toman"
+                    className="text-white hover:text-yellow-300"
+                  >
+                    USD Calculator
                   </Link>
                 </li>
               </ul>
