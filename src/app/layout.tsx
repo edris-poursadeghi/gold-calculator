@@ -51,6 +51,16 @@ export default function RootLayout({
                     USD Calculator
                   </Link>
                 </li>
+
+                <li>
+                  <Link
+                    prefetch={false}
+                    href="/xau-to-gold"
+                    className="text-white hover:text-yellow-300"
+                  >
+                    XAU Calculator
+                  </Link>
+                </li>
               </ul>
             </nav>
           </div>
